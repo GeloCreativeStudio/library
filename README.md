@@ -12,7 +12,7 @@ The Library Management System is a comprehensive web application built with Next
   - Edit existing book information
   - Delete books from the library
 - **Search and Filter:**
-  - Search for books by title or author
+  - Search books by title or author
   - Filter books by genre and availability
 - **User-friendly Interface:** Responsive design for seamless use on desktop and mobile devices
 - **RESTful API:** Well-structured API for easy integration and extensibility
@@ -20,13 +20,16 @@ The Library Management System is a comprehensive web application built with Next
 ## Technology Stack
 
 - **Frontend:**
-  - Next.js 13+ (React)
+  - Next.js 14+
+  - React 18+
   - TypeScript
   - Tailwind CSS
   - shadcn/ui components
 - **Backend:**
-  - Flask (Python)
+  - Flask 2.3.3
   - SQLite
+  - SQLAlchemy 3.1.0
+  - Flask-CORS 4.0.1
 - **API:** RESTful architecture
 
 ## Prerequisites
@@ -38,41 +41,47 @@ The Library Management System is a comprehensive web application built with Next
 ## Project Structure
 
 ```
-library-management-system/
+library/
 ├── backend/
-│   ├── app.py              # Main Flask application
-│   ├── models.py           # Database models
-│   ├── routes/             # API route handlers
-│   ├── services/           # Business logic
-│   ├── tests/              # Backend unit tests
-│   └── requirements.txt    # Python dependencies
-└── frontend/
-    ├── src/
-    │   ├── app/            # Next.js app directory
-    │   ├── components/     # React components
-    │   ├── lib/            # Utility functions
-    │   └── types/          # TypeScript type definitions
-    ├── public/             # Static assets
-    ├── tests/              # Frontend unit and integration tests
-    ├── .env.local          # Environment variables
-    └── package.json        # Node.js dependencies
+│   ├── __pycache__/      # Compiled Python files for performance
+│   ├── instance/         # Instance-specific configuration (e.g., sensitive data)
+│   ├── app.py            # Main Flask application
+│   ├── models.py         # Database models (SQLAlchemy or similar ORM)
+│   ├── requirements.txt  # Python dependencies
+│   └── .gitignore        # Git ignore file for backend-specific files (e.g., venv, secrets)
+├── frontend/
+│   ├── src/              # Source directory for frontend code
+│   │   ├── components/   # React components (e.g., reusable UI elements)
+│   │   ├── pages/        # Next.js pages (based on file routing)
+│   │   ├── app/          # Next.js app directory (optional for new layout structure)
+│   │   └── lib/          # Utility functions (helper methods, API wrappers)
+│   ├── .eslint.json      # ESLint configuration for code linting
+│   ├── next.config.mjs   # Next.js configuration file
+│   ├── package.json      # Node.js dependencies and scripts
+│   ├── postcss.config.js # PostCSS configuration for styling
+│   ├── tailwind.config.ts# Tailwind CSS configuration
+│   ├── tsconfig.json     # TypeScript configuration for the frontend
+│   └── .gitignore        # Git ignore file for frontend-specific files (e.g., node_modules)
+├── .gitmodules           # Git submodules configuration (if used)
+└── README.md             # Main documentation for the project
 ```
-
 ## Setup and Installation
 
 ### Backend Setup
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/library-management-system.git
-   cd library-management-system
-   ```
-
-2. Set up the backend:
+1. Navigate to the backend directory:
    ```
    cd backend
+   ```
+
+2. Create a virtual environment and activate it:
+   ```
    python -m venv venv
    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   ```
+
+3. Install the required dependencies:
+   ```
    pip install -r requirements.txt
    ```
 
@@ -80,52 +89,18 @@ library-management-system/
 
 1. Navigate to the frontend directory:
    ```
-   cd ../frontend
+   cd frontend
    ```
 
-2. Install Next.js and its dependencies:
+2. Install the dependencies:
    ```
-   npx create-next-app@latest .
-   ```
-   Choose the following options when prompted:
-   - Would you like to use TypeScript? Yes
-   - Would you like to use ESLint? Yes
-   - Would you like to use Tailwind CSS? Yes
-   - Would you like to use `src/` directory? Yes
-   - Would you like to use App Router? Yes
-   - Would you like to customize the default import alias? No
-
-3. Install additional dependencies:
-   ```
-   npm install axios react-query
+   npm install
    ```
 
-4. Install and set up shadcn/ui:
+3. Create a `.env.local` file in the frontend directory and add the following:
    ```
-   npx shadcn-ui@latest init
+   NEXT_PUBLIC_API_URL=http://localhost:5000
    ```
-   Choose the following options:
-   - Would you like to use TypeScript (recommended)? Yes
-   - Which style would you like to use? › Default
-   - Which color would you like to use as base color? › Slate
-   - Where is your global CSS file? › › src/app/globals.css
-   - Do you want to use CSS variables for colors? › Yes
-   - Where is your tailwind.config.js located? › tailwind.config.js
-   - Configure the import alias for components: › @/components
-   - Configure the import alias for utils: › @/lib/utils
-   - Are you using React Server Components? › Yes
-   - Write configuration to components.json. Proceed? › Yes
-
-5. Install specific shadcn/ui components as needed:
-   ```
-   npx shadcn-ui@latest add button
-   npx shadcn-ui@latest add input
-   npx shadcn-ui@latest add table
-   ```
-
-6. Configure environment variables:
-   - Copy `.env.example` to `.env.local` in the frontend directory
-   - Update the variables as needed, especially the API_URL
 
 ## Running the Application
 
@@ -147,25 +122,23 @@ library-management-system/
 
 - `GET /api/books`: Fetch all books
 - `POST /api/books`: Add a new book
-- `GET /api/books/<id>`: Fetch a specific book
 - `PUT /api/books/<id>`: Update a book
 - `DELETE /api/books/<id>`: Delete a book
 - `GET /api/books/search`: Search and filter books
 
-For detailed API documentation, refer to the [API Documentation](API_DOCS.md) file.
+## Development
 
-## Testing
+### Backend Development
 
-- Run backend tests:
-  ```
-  cd backend
-  pytest
-  ```
-- Run frontend tests:
-  ```
-  cd frontend
-  npm run test
-  ```
+- The main application logic is in `backend/app.py`
+- Database models are defined in `backend/models.py`
+- To add new endpoints, update `app.py` and create corresponding functions
+
+### Frontend Development
+
+- The main application component is in `frontend/src/components/LibraryManagementSystem.tsx`
+- API calls are handled in `frontend/src/utils/api.ts`
+- To add new features, create new components in the `components` directory and update the main component as needed
 
 ## Contributing
 
